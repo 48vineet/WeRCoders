@@ -13,7 +13,14 @@ const __dirname = path.resolve();
 
 app.use(express.json());
 app.use(cors({ origin: env.CLIENT_URL, credentials: true }));
-app.use("/api/inngest", serve({ client: inngest, functions }));
+app.use(
+  "/api/inngest",
+  serve({
+    client: inngest,
+    functions,
+    signingKey: env.INNGEST_SIGNING_KEY, // required to verify webhook signatures
+  })
+);
 
 app.get("/health", (req, res) => {
   res.status(200).json({ message: "Api is up and running " });
