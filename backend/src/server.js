@@ -1,3 +1,4 @@
+import { clerkMiddleware } from "@clerk/express";
 import cors from "cors";
 import express from "express";
 import { serve } from "inngest/express";
@@ -5,6 +6,7 @@ import path from "path";
 import { connectDB } from "./lib/db.js";
 import env from "./lib/env.js";
 import { functions, inngest } from "./lib/innjest.js";
+import chatRoute from "./routes/chatRoute.js";
 
 const app = express();
 const __dirname = path.resolve();
@@ -13,6 +15,7 @@ const __dirname = path.resolve();
 
 app.use(express.json());
 app.use(cors({ origin: env.CLIENT_URL, credentials: true }));
+app.use(clerkMiddleware());
 app.use(
   "/api/inngest",
   serve({
@@ -21,6 +24,7 @@ app.use(
     signingKey: env.INNGEST_SIGNING_KEY, // required to verify webhook signatures
   })
 );
+app.use("/api/chat", chatRoute);
 
 app.get("/health", (req, res) => {
   res.status(200).json({ message: "Api is up and running " });
