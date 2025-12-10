@@ -1,5 +1,6 @@
 import express from "express";
 import path from "path";
+import { connectDB } from "./lib/db.js";
 import env from "./lib/env.js";
 
 const app = express();
@@ -17,6 +18,15 @@ if (env.NODE_ENV === "production") {
   });
 }
 
-app.listen(env.PORT, () => {
-  console.log("app is hosted on port no", env.PORT);
-});
+const startServer = async () => {
+  try {
+    await connectDB();
+    app.listen(env.PORT, () => {
+      console.log("app is hosted on port no", env.PORT);
+    });
+  } catch (error) {
+    console.error("Error while conneting DB");
+  }
+};
+
+startServer();
