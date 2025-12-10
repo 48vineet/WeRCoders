@@ -2,13 +2,14 @@ import { Inngest } from "inngest";
 import User from "../models/User.js";
 import { connectDB } from "./db.js";
 
-export const innjest = new Inngest({ id: "wecode" });
+// Shared Inngest client instance used by all functions
+export const inngest = new Inngest({ id: "wecode" });
 
-const syncUser = innjest.createFunction(
+const syncUser = inngest.createFunction(
   {
     id: "sync-user",
   },
-  { even: "clerk/user.created" },
+  { event: "clerk/user.created" },
   async ({ event }) => {
     await connectDB();
     const { id, email_addresses, first_name, last_name, image_url } =
@@ -24,16 +25,16 @@ const syncUser = innjest.createFunction(
   }
 );
 
-const deleteUserFromDB = innjest.createFunction(
+const deleteUserFromDB = inngest.createFunction(
   {
     id: "delete-user-from-db",
   },
-  { even: "clerk/user.deleted" },
+  { event: "clerk/user.deleted" },
   async ({ event }) => {
     await connectDB();
     const { id } = event.data;
 
-    await User.deleteOne({ clearkId: id });
+    await User.deleteOne({ clerkId: id });
   }
 );
 

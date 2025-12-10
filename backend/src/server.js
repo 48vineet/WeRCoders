@@ -4,7 +4,7 @@ import { serve } from "inngest/express";
 import path from "path";
 import { connectDB } from "./lib/db.js";
 import env from "./lib/env.js";
-import { inngest } from "./lib/innjest.js";
+import { functions, inngest } from "./lib/innjest.js";
 
 const app = express();
 const __dirname = path.resolve();
