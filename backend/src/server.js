@@ -1,10 +1,19 @@
+import cors from "cors";
 import express from "express";
+import { serve } from "inngest/express";
 import path from "path";
 import { connectDB } from "./lib/db.js";
 import env from "./lib/env.js";
+import { inngest } from "./lib/innjest.js";
 
 const app = express();
 const __dirname = path.resolve();
+
+//! middlewares
+
+app.use(express.json());
+app.use(cors({ origin: env.CLIENT_URL, credentials: true }));
+app.use("/api/inngest", serve({ client: inngest, functions }));
 
 app.get("/health", (req, res) => {
   res.status(200).json({ message: "Api is up and running " });
@@ -13,7 +22,6 @@ app.get("/health", (req, res) => {
 if (env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "../frontend/dist")));
 
-  // SPA fallback: serve index.html for any route so client routing works.
   app.use((req, res) => {
     res.sendFile(path.join(__dirname, "../frontend", "dist", "index.html"));
   });
