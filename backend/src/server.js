@@ -6,7 +6,8 @@ import path from "path";
 import { connectDB } from "./lib/db.js";
 import env from "./lib/env.js";
 import { functions, inngest } from "./lib/innjest.js";
-import chatRoute from "./routes/chatRoute.js";
+import chatRoutes from "./routes/chatRoute.js";
+import sessionRoutes from "./routes/sessionRoutes.js";
 
 const app = express();
 const __dirname = path.resolve();
@@ -24,7 +25,8 @@ app.use(
     signingKey: env.INNGEST_SIGNING_KEY, // required to verify webhook signatures
   })
 );
-app.use("/api/chat", chatRoute);
+app.use("/api/chat", chatRoutes);
+app.use("/api/session", sessionRoutes);
 
 app.get("/health", (req, res) => {
   res.status(200).json({ message: "Api is up and running " });

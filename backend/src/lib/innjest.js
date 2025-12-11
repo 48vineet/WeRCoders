@@ -29,6 +29,8 @@ const syncUser = inngest.createFunction(
       name: newUser.name,
       image: newUser.profileImage,
     });
+
+    //todo send email welcome message after login (after completion of whole video)
   }
 );
 
