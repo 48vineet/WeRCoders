@@ -65,11 +65,28 @@ class Solution {
         System.out.println(Arrays.toString(twoSum(new int[]{3, 3}, 6))); // Expected: [0, 1]
     }
 }`,
+      c: `#include <stdio.h>
+
+int* twoSum(int* nums, int numsSize, int target, int* returnSize) {
+    // Write your solution here
+    static int result[2];
+    *returnSize = 2;
+    return result;
+}
+
+int main() {
+    int nums[] = {2,7,11,15};
+    int size;
+    int* res = twoSum(nums, 4, 9, &size);
+    printf("[%d, %d]\\n", res[0], res[1]);
+    return 0;
+}`,
     },
     expectedOutput: {
       javascript: "[0,1]\n[1,2]\n[0,1]",
       python: "[0, 1]\n[1, 2]\n[0, 1]",
       java: "[0, 1]\n[1, 2]\n[0, 1]",
+      c: "[0, 1]\n[1, 2]\n[0, 1]",
     },
   },
 
@@ -139,11 +156,23 @@ class Solution {
         System.out.println(Arrays.toString(test2)); // Expected: [h, a, n, n, a, H]
     }
 }`,
+      c: `#include <stdio.h>
+
+void reverseString(char* s, int size) {
+    // Write your solution here
+}
+
+int main() {
+    char s[] = {'h','e','l','l','o'};
+    reverseString(s, 5);
+    return 0;
+}`,
     },
     expectedOutput: {
       javascript: '["o","l","l","e","h"]\n["h","a","n","n","a","H"]',
       python: "['o', 'l', 'l', 'e', 'h']\n['h', 'a', 'n', 'n', 'a', 'H']",
       java: "[o, l, l, e, h]\n[h, a, n, n, a, H]",
+      c: "[o, l, l, e, h]\n[h, a, n, n, a, H]",
     },
   },
 
@@ -211,11 +240,25 @@ print(isPalindrome(" "))  # Expected: True`,
         System.out.println(isPalindrome(" ")); // Expected: true
     }
 }`,
+      c: `#include <stdio.h>
+#include <ctype.h>
+#include <string.h>
+
+int isPalindrome(char* s) {
+    // Write your solution here
+    return 1;
+}
+
+int main() {
+    printf("%d\\n", isPalindrome("A man, a plan, a canal: Panama"));
+    return 0;
+}`,
     },
     expectedOutput: {
       javascript: "true\nfalse\ntrue",
       python: "True\nFalse\nTrue",
       java: "true\nfalse\ntrue",
+      c: "1\n0\n1",
     },
   },
 
@@ -277,11 +320,24 @@ print(maxSubArray([5,4,-1,7,8]))  # Expected: 23`,
         System.out.println(maxSubArray(new int[]{5,4,-1,7,8})); // Expected: 23
     }
 }`,
+      c: `#include <stdio.h>
+
+int maxSubArray(int* nums, int size) {
+    // Write your solution here
+    return 0;
+}
+
+int main() {
+    int nums[] = {-2,1,-3,4,-1,2,1,-5,4};
+    printf("%d\\n", maxSubArray(nums, 9));
+    return 0;
+}`,
     },
     expectedOutput: {
       javascript: "6\n1\n23",
       python: "6\n1\n23",
       java: "6\n1\n23",
+      c: "6\n1\n23",
     },
   },
 
@@ -339,11 +395,24 @@ print(maxArea([1,1]))  # Expected: 1`,
         System.out.println(maxArea(new int[]{1,1})); // Expected: 1
     }
 }`,
+      c: `#include <stdio.h>
+
+int maxArea(int* height, int size) {
+    // Write your solution here
+    return 0;
+}
+
+int main() {
+    int h[] = {1,8,6,2,5,4,8,3,7};
+    printf("%d\\n", maxArea(h, 9));
+    return 0;
+}`,
     },
     expectedOutput: {
       javascript: "49\n1",
       python: "49\n1",
       java: "49\n1",
+      c: "49\n1",
     },
   },
 };
@@ -363,5 +432,10 @@ export const LANGUAGE_CONFIG = {
     name: "Java",
     icon: "/java.png",
     monacoLang: "java",
+  },
+  c: {
+    name: "C",
+    icon: "/c.png",
+    monacoLang: "c",
   },
 };
