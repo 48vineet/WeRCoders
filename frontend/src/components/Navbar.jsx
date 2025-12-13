@@ -53,7 +53,9 @@ const Navbar = () => {
               <span className="font-medium hidden sm:inline ">Dashboard</span>
             </div>
           </Link>
-          <UserButton />
+          <div className="ml-4 mt-2">
+            <UserButton />
+          </div>
         </div>
       </div>
     </nav>
