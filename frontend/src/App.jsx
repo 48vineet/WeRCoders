@@ -1,16 +1,26 @@
 import { useUser } from "@clerk/clerk-react";
 import { Navigate, Route, Routes } from "react-router";
 import { Toaster } from "sonner";
+import DashboardPage from "./pages/DashboardPage";
 import HomePage from "./pages/HomePage";
 import ProblemsPage from "./pages/ProblemsPage";
 
 function App() {
-  const { isSignedIn } = useUser();
+  const { isSignedIn, isLoaded } = useUser();
+
+  if (!isLoaded) return null;
 
   return (
     <>
       <Routes>
-        <Route path="/" element={<HomePage />}></Route>
+        <Route
+          path="/"
+          element={!isSignedIn ? <HomePage /> : <Navigate to="/dashboard" />}
+        ></Route>
+        <Route
+          path="/dashboard"
+          element={isSignedIn ? <DashboardPage /> : <Navigate to="/" />}
+        ></Route>
         <Route
           path="/problems"
           element={isSignedIn ? <ProblemsPage /> : <Navigate to="/" />}
