@@ -15,7 +15,7 @@ const HomePage = () => {
   return (
     <div className="bg-linear-to-br  from-base-100 via-base-200 to-base-300">
       <nav className="bg-base-100/80 backdrop-blur-md border-b  border-primary/20 sticky top-0 z-50 shadow-lg">
-        <div className="max-w-7xl mx-auto p-4 flex items-center justify-between">
+        <div className="max-w-7xl mx-auto px-3 sm:px-4 py-3 flex items-center justify-between gap-3 flex-wrap">
           <Link
             to={"/"}
             className="flex items-center gap-3 hover:scale-105 transition-transform duration-300 "
@@ -34,7 +34,7 @@ const HomePage = () => {
           </Link>
           {/* Auth Btn */}
           <SignInButton mode="modal">
-            <button className="group px-6 py-3 bg-linear-to-r from bg-primary to-secondary rounded-xl text-white font-semibold text-sm shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 flex items-center gap-2">
+            <button className="group px-5 sm:px-6 py-3 bg-linear-to-r from bg-primary to-secondary rounded-xl text-white font-semibold text-sm shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 flex items-center gap-2">
               <span>Get Started</span>
               <LogIn className="size-4 group-hover:translate-x-0.5 transition-transform " />
             </button>
@@ -43,8 +43,8 @@ const HomePage = () => {
       </nav>
 
       {/* HERO SECTION */}
-      <div className="max-w-7xl mx-auto px-4 py-20">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-14 sm:py-20">
+        <div className="grid lg:grid-cols-2 gap-10 sm:gap-12 items-center">
           {/* LEFT CONTENT */}
           <div className="space-y-8">
             <div className="badge badge-primary badge-lg rounded-2xl">
@@ -52,7 +52,7 @@ const HomePage = () => {
               Real-time Collaboration
             </div>
 
-            <h1 className="text-5xl lg:text-7xl font-black leading-tight">
+            <h1 className="text-4xl sm:text-5xl lg:text-7xl font-black leading-tight">
               <span className="bg-linear-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">
                 Code Together,
               </span>
@@ -60,7 +60,7 @@ const HomePage = () => {
               <span className="text-base-content">Learn Together</span>
             </h1>
 
-            <p className="text-xl text-base-content/70 leading-relaxed max-w-xl">
+            <p className="text-lg sm:text-xl text-base-content/70 leading-relaxed max-w-xl">
               The ultimate platform for collaborative coding interviews and pair
               programming. Connect face-to-face, code in real-time, and ace your
               technical interviews.
@@ -83,7 +83,7 @@ const HomePage = () => {
             </div>
 
             {/* CTA Buttons */}
-            <div className="flex flex-wrap gap-4">
+            <div className="flex flex-wrap gap-3 sm:gap-4">
               <SignInButton mode="modal">
                 <button className="btn btn-primary btn-lg">
                   Start Coding Now
@@ -123,20 +123,20 @@ const HomePage = () => {
         </div>
       </div>
       {/* FEATURES SECTION */}
-      <div className="max-w-7xl mx-auto px-4 py-20">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-14 sm:py-20">
         <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold mb-4">
+          <h2 className="text-3xl sm:text-4xl font-bold mb-4">
             Everything You Need to{" "}
             <span className="text-primary font-mono">Succeed</span>
           </h2>
-          <p className="text-lg text-base-content/70 max-w-2xl mx-auto">
+          <p className="text-base sm:text-lg text-base-content/70 max-w-2xl mx-auto">
             Powerful features designed to make your coding interviews seamless
             and productive
           </p>
         </div>
 
         {/* FEATURES GRID */}
-        <div className="grid md:grid-cols-3 gap-8">
+        <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8">
           {/* Feature 1 */}
           <div className="card bg-base-100 shadow-xl">
             <div className="card-body items-center text-center">

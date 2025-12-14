@@ -7,7 +7,7 @@ const Navbar = () => {
   const isActive = (path) => location.pathname === path;
   return (
     <nav className="bg-base-100/80 backdrop-blur-md border-b border-primary/20 sticky top-0 z-50 shadow-lg">
-      <div className="max-w-7xl ax-auto p-4 flex items-center justify-between">
+      <div className="max-w-7xl mx-auto px-3 sm:px-4 py-3 flex flex-wrap items-center justify-between gap-3">
         <Link
           to={"/"}
           className="flex items-center gap-3 hover:scale-105 transition-transform duration-300 "
@@ -24,7 +24,7 @@ const Navbar = () => {
             </span>
           </div>
         </Link>
-        <div className="flex items-center gap-1 ">
+        <div className="flex items-center gap-1 flex-wrap justify-end">
           {/* Problems Page Link */}
           <Link
             to={"/problems"}
@@ -53,7 +53,7 @@ const Navbar = () => {
               <span className="font-medium hidden sm:inline ">Dashboard</span>
             </div>
           </Link>
-          <div className="ml-4 mt-2">
+          <div className="ml-2 sm:ml-4 mt-2">
             <UserButton />
           </div>
         </div>
