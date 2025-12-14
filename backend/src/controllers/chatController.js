@@ -7,7 +7,7 @@ export async function getStreamToken(req, res) {
       token,
       userId: req.user.clerkId,
       userName: req.user.name,
-      userImage: req.user.image,
+      userImage: req.user.profileImage,
     });
   } catch (error) {
     res.status(200).json({ msg: "Internal Server Error" });

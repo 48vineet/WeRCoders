@@ -24,6 +24,9 @@ const userSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
+// Ensure correct index exists; avoid legacy typos
+userSchema.index({ clerkId: 1 }, { unique: true, name: "clerkId_1" });
+
 const User = mongoose.model("User", userSchema);
 
 export default User;
