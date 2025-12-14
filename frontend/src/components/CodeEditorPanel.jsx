@@ -1,5 +1,6 @@
 import Editor from "@monaco-editor/react";
 import { Loader2Icon, PlayIcon } from "lucide-react";
+import { useRef } from "react";
 import { LANGUAGE_CONFIG } from "../data/data";
 
 function CodeEditorPanel({
@@ -10,6 +11,20 @@ function CodeEditorPanel({
   onCodeChange,
   onRunCode,
 }) {
+  const editorRef = useRef(null);
+
+  const handleEditorMount = (editor) => {
+    editorRef.current = editor;
+
+    // Format on Ctrl+S (Cmd+S on Mac)
+    editor.addCommand(
+      window.monaco.KeyMod.CtrlCmd | window.monaco.KeyCode.KeyS,
+      () => {
+        editor.getAction("editor.action.formatDocument").run();
+      }
+    );
+  };
+
   return (
     <div className="h-full bg-base-300 flex flex-col">
       <div className="flex items-center justify-between px-4 py-3 bg-base-100 border-t border-base-300">
@@ -57,6 +72,7 @@ function CodeEditorPanel({
           language={LANGUAGE_CONFIG[selectedLanguage].monacoLang}
           value={code}
           onChange={onCodeChange}
+          onMount={handleEditorMount}
           theme="vs-dark"
           options={{
             fontSize: 16,
