@@ -3,7 +3,8 @@ import Session from "../models/Session.js";
 
 export async function createSession(req, res) {
   try {
-    const { problem, difficulty } = req.body;
+    const problem = req.body.problem;
+    const difficulty = req.body.difficulty?.toLowerCase();
     const userId = req.user._id;
     const clerkId = req.user.clerkId;
 
@@ -32,12 +33,12 @@ export async function createSession(req, res) {
     //! chat messaging
     const channel = chatClient.channel("messaging", callId, {
       name: `${problem} Session`,
-      created_by: clerkId,
+      created_by: { id: clerkId },
       members: [clerkId],
     });
     await channel.create();
 
-    res.status(201).json({ message: "Session Created Succesfully" });
+    res.status(201).json({ message: "Session Created Succesfully", session });
   } catch (error) {
     console.error("Error in create session controller", error.message);
     res.status(500).json({ message: "Internal Server Error" });
@@ -81,9 +82,8 @@ export async function getSessionById(req, res) {
       .populate("host", "name email profileImage clerkId ")
       .populate("participant", "name email profileImage clerkId ");
 
-    if (!session)
-      return res.session(404).json({ message: "session not found" });
-    res.status(200).json({ sessions });
+    if (!session) return res.status(404).json({ message: "session not found" });
+    res.status(200).json({ session });
   } catch (error) {
     console.error("Error in getSessionById controller", error.message);
     res.status(500).json({ message: "Internal Server Error" });
@@ -120,7 +120,7 @@ export async function joinSession(req, res) {
     const channel = chatClient.channel("messaging", session.callId);
     await channel.addMembers([clerkId]);
 
-    res.status(200).json({ sessions });
+    res.status(200).json({ session });
   } catch (error) {
     console.error("Error in joinSession controller", error.message);
     res.status(500).json({ message: "Internal Server Error" });
@@ -141,7 +141,7 @@ export async function endSession(req, res) {
     }
 
     //check if session is alredy completed
-    if (session.status !== "completed") {
+    if (session.status === "completed") {
       return res.status(403).json({ message: "Session is already completed" });
     }
 
@@ -156,9 +156,9 @@ export async function endSession(req, res) {
     session.status = "completed";
     await session.save();
 
-    res.status(200).json({ sessions });
+    res.status(200).json({ session });
   } catch (error) {
-    console.error("Error in joinSession controller", error.message);
+    console.error("Error in endSession controller", error.message);
     res.status(500).json({ message: "Internal Server Error" });
   }
 }
