@@ -23,6 +23,9 @@ createRoot(document.getElementById("root")).render(
           publishableKey={PUBLISHABLE_KEY}
           appearance={{
             baseTheme: "dark",
+            elements: {
+              cl__devBrowser: "hidden",
+            },
           }}
         >
           <App />
