@@ -221,7 +221,7 @@ This project is licensed under the ISC License.
 **48vineet**
 
 - GitHub: [@48vineet](https://github.com/48vineet)
-- Repository: [MiniLeetCode](https://github.com/48vineet/WeRCoders)
+- Repository: [WeRCoders](https://github.com/48vineet/WeRCoders)
 
 ## 🙏 Acknowledgements
 
