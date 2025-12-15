@@ -64,22 +64,35 @@ export const protectRoute = [
         }
       }
 
-      // Explicitly detect email reuse with a different Clerk ID without overwriting
+      // Explicitly detect email reuse with a different Clerk ID and migrate it
       if (
         user?.email === primaryEmail &&
         user?.clerkId &&
         user.clerkId !== clerkId
       ) {
-        console.warn("Clerk ID conflict: existing user has different clerkId", {
-          existingClerkId: user.clerkId,
-          incomingClerkId: clerkId,
-          email: primaryEmail,
-        });
-        return res
-          .status(409)
-          .json({
-            message: "Account conflict: email linked to another Clerk user",
+        console.warn(
+          "Clerk ID conflict detected: migrating user to new Clerk ID",
+          {
+            existingClerkId: user.clerkId,
+            incomingClerkId: clerkId,
+            email: primaryEmail,
+          }
+        );
+
+        // Update the user's clerkId to the new one from Clerk
+        try {
+          user = await User.findOneAndUpdate(
+            { email: primaryEmail },
+            { $set: { clerkId, name, profileImage: image } },
+            { new: true }
+          );
+          console.log("Successfully migrated user to new Clerk ID");
+        } catch (migrateError) {
+          console.error("Failed to migrate user Clerk ID:", migrateError);
+          return res.status(500).json({
+            message: "Failed to migrate user account. Please contact support.",
           });
+        }
       }
 
       req.user = user;
