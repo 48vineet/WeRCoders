@@ -1,4 +1,4 @@
-# WeCode
+# WeRCoders
 
 A real-time collaborative coding platform where developers can solve programming problems together with integrated video calls, live code execution, and chat functionality.
 
@@ -221,7 +221,7 @@ This project is licensed under the ISC License.
 **48vineet**
 
 - GitHub: [@48vineet](https://github.com/48vineet)
-- Repository: [MiniLeetCode](https://github.com/48vineet/MiniLeetCode)
+- Repository: [WeRCoders](https://github.com/48vineet/WeRCoders)
 
 ## 🙏 Acknowledgements
 
