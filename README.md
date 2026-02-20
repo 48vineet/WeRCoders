@@ -5,12 +5,15 @@ A real-time collaborative coding platform where developers can solve programming
 ## 🚀 Features
 
 - **Real-time Collaboration**: Multiple users can code together in the same session
-- **Video & Audio Calls**: Built-in video conferencing for pair programming
+- **1v1 Battle Mode**: Competitive coding challenges with countdown, timer, and instant winner determination
+- **Video & Audio Calls**: Built-in video conferencing for pair programming and battles
 - **Live Code Execution**: Run and test code directly in the browser using Piston API
 - **Monaco Editor**: Professional code editor with syntax highlighting and IntelliSense
 - **Chat Integration**: In-session messaging powered by Stream Chat
 - **Problem Library**: Collection of coding problems with difficulty levels
 - **Session Management**: Create, join, and manage collaborative coding sessions
+- **Password-Protected Rooms**: Lock battle rooms with optional passwords for private matches
+- **Countdown & Timer**: Battle countdown (3-2-1-Go) and elapsed time tracking
 - **Authentication**: Secure user authentication with Clerk
 - **Responsive UI**: Modern interface built with React and TailwindCSS
 
@@ -161,6 +164,13 @@ WeCode/
 └── package.json              # Root package file
 ```
 
+### Battle Winner Determination
+
+- **Correct Submission**: First user to submit a solution that passes all test cases wins
+- **Wrong Submission**: User who submits incorrect code loses immediately; opponent wins
+- **Simultaneous Wrong**: If both submit incorrect solutions within 2 seconds, it's a draw
+- **Disconnect**: User who disconnects forfeits; opponent wins
+
 ## 🎯 Key Features Explained
 
 ### Session Flow
@@ -172,6 +182,18 @@ WeCode/
 5. Video call and chat are active throughout
 6. Code can be executed and results shared in real-time
 7. Session ends when host terminates it
+
+### Battle Mode Flow
+
+1. User creates a 1v1 battle by selecting a problem (optionally password-protected)
+2. Creator receives a shareable battle link
+3. Opponent joins via link (enters password if locked)
+4. Both users see the problem, code editor, video call, and chat
+5. Users click "Ready" when prepared
+6. When both are ready, a 3-2-1-Go countdown begins
+7. Timer starts; users can "Run" code (sample tests) or "Submit" (full tests)
+8. First correct submission wins; incorrect submission loses immediately
+9. Both users see win/loss popup and can return to lobby
 
 ### Code Execution
 
@@ -196,6 +218,17 @@ WeCode/
 - `GET /api/session/:id` - Get session details
 - `GET /api/session/active` - Get active sessions
 - `GET /api/session/recent` - Get recent sessions
+
+### Battle Routes
+
+- `POST /api/battle/create` - Create new battle
+- `GET /api/battle/active` - Get active battles
+- `GET /api/battle/:roomId` - Get battle details
+- `POST /api/battle/join/:roomId` - Join battle (with optional password)
+- `POST /api/battle/:roomId/ready` - Set ready status
+- `POST /api/battle/:roomId/run` - Run code against sample tests
+- `POST /api/battle/:roomId/submit` - Submit final solution
+- `POST /api/battle/:roomId/leave` - Leave/forfeit battle
 
 ### Chat Routes
 

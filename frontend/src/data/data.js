@@ -81,12 +81,39 @@ int main() {
     printf("[%d, %d]\\n", res[0], res[1]);
     return 0;
 }`,
+      cpp: `#include <iostream>
+#include <vector>
+#include <unordered_map>
+using namespace std;
+
+vector<int> twoSum(vector<int>& nums, int target) {
+    // Write your solution here
+
+    return {};
+}
+
+int main() {
+    vector<int> nums1 = {2, 7, 11, 15};
+    vector<int> res1 = twoSum(nums1, 9);
+    cout << "[" << res1[0] << ", " << res1[1] << "]" << endl;
+
+    vector<int> nums2 = {3, 2, 4};
+    vector<int> res2 = twoSum(nums2, 6);
+    cout << "[" << res2[0] << ", " << res2[1] << "]" << endl;
+
+    vector<int> nums3 = {3, 3};
+    vector<int> res3 = twoSum(nums3, 6);
+    cout << "[" << res3[0] << ", " << res3[1] << "]" << endl;
+
+    return 0;
+}`,
     },
     expectedOutput: {
       javascript: "[0,1]\n[1,2]\n[0,1]",
       python: "[0, 1]\n[1, 2]\n[0, 1]",
       java: "[0, 1]\n[1, 2]\n[0, 1]",
       c: "[0, 1]\n[1, 2]\n[0, 1]",
+      cpp: "[0, 1]\n[1, 2]\n[0, 1]",
     },
   },
 
@@ -167,12 +194,43 @@ int main() {
     reverseString(s, 5);
     return 0;
 }`,
+      cpp: `#include <iostream>
+#include <vector>
+using namespace std;
+
+void reverseString(vector<char>& s) {
+    // Write your solution here
+
+}
+
+int main() {
+    vector<char> test1 = {'h','e','l','l','o'};
+    reverseString(test1);
+    cout << "[";
+    for (size_t i = 0; i < test1.size(); ++i) {
+        if (i > 0) cout << ", ";
+        cout << test1[i];
+    }
+    cout << "]" << endl;
+
+    vector<char> test2 = {'H','a','n','n','a','h'};
+    reverseString(test2);
+    cout << "[";
+    for (size_t i = 0; i < test2.size(); ++i) {
+        if (i > 0) cout << ", ";
+        cout << test2[i];
+    }
+    cout << "]" << endl;
+
+    return 0;
+}`,
     },
     expectedOutput: {
       javascript: '["o","l","l","e","h"]\n["h","a","n","n","a","H"]',
       python: "['o', 'l', 'l', 'e', 'h']\n['h', 'a', 'n', 'n', 'a', 'H']",
       java: "[o, l, l, e, h]\n[h, a, n, n, a, H]",
       c: "[o, l, l, e, h]\n[h, a, n, n, a, H]",
+      cpp: "[o, l, l, e, h]\n[h, a, n, n, a, H]",
     },
   },
 
@@ -253,12 +311,31 @@ int main() {
     printf("%d\\n", isPalindrome("A man, a plan, a canal: Panama"));
     return 0;
 }`,
+      cpp: `#include <iostream>
+#include <string>
+#include <cctype>
+using namespace std;
+
+bool isPalindrome(string s) {
+    // Write your solution here
+
+    return false;
+}
+
+int main() {
+    cout << (isPalindrome("A man, a plan, a canal: Panama") ? "true" : "false") << endl;
+    cout << (isPalindrome("race a car") ? "true" : "false") << endl;
+    cout << (isPalindrome(" ") ? "true" : "false") << endl;
+
+    return 0;
+}`,
     },
     expectedOutput: {
       javascript: "true\nfalse\ntrue",
       python: "True\nFalse\nTrue",
       java: "true\nfalse\ntrue",
       c: "1\n0\n1",
+      cpp: "true\nfalse\ntrue",
     },
   },
 
@@ -332,12 +409,36 @@ int main() {
     printf("%d\\n", maxSubArray(nums, 9));
     return 0;
 }`,
+      cpp: `#include <iostream>
+#include <vector>
+#include <climits>
+using namespace std;
+
+int maxSubArray(vector<int>& nums) {
+    // Write your solution here
+
+    return 0;
+}
+
+int main() {
+    vector<int> nums1 = {-2, 1, -3, 4, -1, 2, 1, -5, 4};
+    cout << maxSubArray(nums1) << endl;
+
+    vector<int> nums2 = {1};
+    cout << maxSubArray(nums2) << endl;
+
+    vector<int> nums3 = {5, 4, -1, 7, 8};
+    cout << maxSubArray(nums3) << endl;
+
+    return 0;
+}`,
     },
     expectedOutput: {
       javascript: "6\n1\n23",
       python: "6\n1\n23",
       java: "6\n1\n23",
       c: "6\n1\n23",
+      cpp: "6\n1\n23",
     },
   },
 
@@ -407,12 +508,33 @@ int main() {
     printf("%d\\n", maxArea(h, 9));
     return 0;
 }`,
+      cpp: `#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+int maxArea(vector<int>& height) {
+    // Write your solution here
+
+    return 0;
+}
+
+int main() {
+    vector<int> height1 = {1, 8, 6, 2, 5, 4, 8, 3, 7};
+    cout << maxArea(height1) << endl;
+
+    vector<int> height2 = {1, 1};
+    cout << maxArea(height2) << endl;
+
+    return 0;
+}`,
     },
     expectedOutput: {
       javascript: "49\n1",
       python: "49\n1",
       java: "49\n1",
       c: "49\n1",
+      cpp: "49\n1",
     },
   },
 };
@@ -437,5 +559,10 @@ export const LANGUAGE_CONFIG = {
     name: "C",
     icon: "/c.png",
     monacoLang: "c",
+  },
+  cpp: {
+    name: "C++",
+    icon: "/cpp.webp",
+    monacoLang: "cpp",
   },
 };

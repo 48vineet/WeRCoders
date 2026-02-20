@@ -6,6 +6,7 @@ import path from "path";
 import { connectDB } from "./lib/db.js";
 import env from "./lib/env.js";
 import { functions, inngest } from "./lib/innjest.js";
+import battleRoutes from "./routes/battleRoutes.js";
 import chatRoutes from "./routes/chatRoute.js";
 import sessionRoutes from "./routes/sessionRoutes.js";
 
@@ -23,8 +24,9 @@ app.use(
     client: inngest,
     functions,
     signingKey: env.INNGEST_SIGNING_KEY, // required to verify webhook signatures
-  })
+  }),
 );
+app.use("/api/battle", battleRoutes);
 app.use("/api/chat", chatRoutes);
 app.use("/api/session", sessionRoutes);
 

@@ -1,7 +1,7 @@
 import { useUser } from "@clerk/clerk-react";
 import { ArrowRightIcon, SparklesIcon, ZapIcon } from "lucide-react";
 
-function WelcomeSection({ onCreateSession }) {
+function WelcomeSection({ onCreateSession, onCreateBattle }) {
   const { user } = useUser();
 
   return (
@@ -21,16 +21,28 @@ function WelcomeSection({ onCreateSession }) {
               Ready to level up your coding skills?
             </p>
           </div>
-          <button
-            onClick={onCreateSession}
-            className="group w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-primary to-secondary rounded-2xl transition-all duration-200 hover:opacity-90"
-          >
-            <div className="flex items-center justify-center gap-2 sm:gap-3 text-white font-bold text-base sm:text-lg">
-              <ZapIcon className="w-5 h-5 sm:w-6 sm:h-6" />
-              <span>Create Session</span>
-              <ArrowRightIcon className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-            </div>
-          </button>
+          <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
+            <button
+              onClick={onCreateSession}
+              className="group w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-primary to-secondary rounded-2xl transition-all duration-200 hover:opacity-90"
+            >
+              <div className="flex items-center justify-center gap-2 sm:gap-3 text-white font-bold text-base sm:text-lg">
+                <ZapIcon className="w-5 h-5 sm:w-6 sm:h-6" />
+                <span>Create Session</span>
+                <ArrowRightIcon className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              </div>
+            </button>
+            <button
+              onClick={onCreateBattle}
+              className="group w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-secondary to-accent rounded-2xl transition-all duration-200 hover:opacity-90"
+            >
+              <div className="flex items-center justify-center gap-2 sm:gap-3 text-white font-bold text-base sm:text-lg">
+                <SparklesIcon className="w-5 h-5 sm:w-6 sm:h-6" />
+                <span>1v1 Battle</span>
+                <ArrowRightIcon className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              </div>
+            </button>
+          </div>
         </div>
       </div>
     </div>

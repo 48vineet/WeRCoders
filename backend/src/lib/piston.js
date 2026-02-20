@@ -1,5 +1,5 @@
-//? Using Judge0 CE API for code execution (Piston API now requires auth)
-
+// Using Judge0 CE API (free, no auth required)
+// Piston public API now requires authorization as of Feb 15, 2026
 const JUDGE0_PUBLIC = "https://ce.judge0.com";
 
 // Language IDs for Judge0
@@ -11,11 +11,6 @@ const LANGUAGE_IDS = {
   cpp: 54, // C++ (GCC)
 };
 
-/**
- * @param {string} language - programming language
- * @param {string} code - source code to executed
- * @returns {Promise<{success:boolean, output?:string, error?: string}>}
- */
 export async function executeCode(language, code) {
   const languageId = LANGUAGE_IDS[language];
 
@@ -28,7 +23,7 @@ export async function executeCode(language, code) {
 
   try {
     // Create submission with wait=true for synchronous response
-    const response = await fetch(
+    const createResponse = await fetch(
       `${JUDGE0_PUBLIC}/submissions?base64_encoded=true&wait=true`,
       {
         method: "POST",
@@ -37,28 +32,33 @@ export async function executeCode(language, code) {
         },
         body: JSON.stringify({
           language_id: languageId,
-          source_code: btoa(code),
+          source_code: Buffer.from(code).toString("base64"),
           stdin: "",
         }),
       },
     );
 
-    if (!response.ok) {
-      // Try polling approach if wait doesn't work
+    if (!createResponse.ok) {
+      // Fallback: try without wait and poll
       return await executeCodeWithPolling(languageId, code);
     }
 
-    const result = await response.json();
+    const result = await createResponse.json();
 
     // Decode base64 output
-    const stdout = result.stdout ? atob(result.stdout) : "";
-    const stderr = result.stderr ? atob(result.stderr) : "";
+    const stdout = result.stdout
+      ? Buffer.from(result.stdout, "base64").toString("utf-8")
+      : "";
+    const stderr = result.stderr
+      ? Buffer.from(result.stderr, "base64").toString("utf-8")
+      : "";
     const compileOutput = result.compile_output
-      ? atob(result.compile_output)
+      ? Buffer.from(result.compile_output, "base64").toString("utf-8")
       : "";
 
-    // Check for errors (status id >= 6 means error)
+    // Check for errors
     if (result.status?.id >= 6) {
+      // Compilation error, runtime error, etc.
       return {
         success: false,
         output: stdout,
@@ -75,6 +75,7 @@ export async function executeCode(language, code) {
       output: stdout || "No output",
     };
   } catch (error) {
+    console.error("Judge0 API error:", error.message);
     return {
       success: false,
       error: `Failed to execute code: ${error.message}`,
@@ -94,7 +95,7 @@ async function executeCodeWithPolling(languageId, code) {
         },
         body: JSON.stringify({
           language_id: languageId,
-          source_code: btoa(code),
+          source_code: Buffer.from(code).toString("base64"),
           stdin: "",
         }),
       },
@@ -109,7 +110,7 @@ async function executeCodeWithPolling(languageId, code) {
 
     const { token } = await createResponse.json();
 
-    // Poll for result (max 10 attempts)
+    // Poll for result
     let result;
     for (let i = 0; i < 10; i++) {
       await new Promise((resolve) => setTimeout(resolve, 1000));
@@ -130,10 +131,14 @@ async function executeCodeWithPolling(languageId, code) {
       };
     }
 
-    const stdout = result.stdout ? atob(result.stdout) : "";
-    const stderr = result.stderr ? atob(result.stderr) : "";
+    const stdout = result.stdout
+      ? Buffer.from(result.stdout, "base64").toString("utf-8")
+      : "";
+    const stderr = result.stderr
+      ? Buffer.from(result.stderr, "base64").toString("utf-8")
+      : "";
     const compileOutput = result.compile_output
-      ? atob(result.compile_output)
+      ? Buffer.from(result.compile_output, "base64").toString("utf-8")
       : "";
 
     if (result.status?.id >= 6) {

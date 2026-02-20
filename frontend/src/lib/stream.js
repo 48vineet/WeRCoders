@@ -5,17 +5,18 @@ const apiKey = import.meta.env.VITE_STREAM_API_KEY;
 let client = null;
 
 export const initializeStreamClient = async (user, token) => {
-  // if client exists with same user instead of creating again return it
+  if (!apiKey) throw new Error("Stream API key is not provided.");
 
-  if (client && client?.user?.id === user.id) return client;
+  // Use getOrCreateInstance to prevent duplicate clients
+  if (client && client?.user?.id === user.id) {
+    return client;
+  }
 
   if (client) {
     await disconnectStreamClient();
   }
 
-  if (!apiKey) throw new Error("Stream API key is not provided.");
-
-  client = new StreamVideoClient({
+  client = StreamVideoClient.getOrCreateInstance({
     apiKey,
     user,
     token,

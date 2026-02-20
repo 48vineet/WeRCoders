@@ -1,6 +1,8 @@
 import { useUser } from "@clerk/clerk-react";
 import { Navigate, Route, Routes } from "react-router";
 import { Toaster } from "sonner";
+import BattleCreatePage from "./pages/BattleCreatePage";
+import BattlePage from "./pages/BattlePage";
 import DashboardPage from "./pages/DashboardPage";
 import HomePage from "./pages/HomePage";
 import ProblemPage from "./pages/ProblemPage";
@@ -22,6 +24,14 @@ function App() {
         <Route
           path="/dashboard"
           element={isSignedIn ? <DashboardPage /> : <Navigate to="/" />}
+        ></Route>
+        <Route
+          path="/battle/create"
+          element={isSignedIn ? <BattleCreatePage /> : <Navigate to="/" />}
+        ></Route>
+        <Route
+          path="/battle/:roomId"
+          element={isSignedIn ? <BattlePage /> : <Navigate to="/" />}
         ></Route>
         <Route
           path="/problems"
