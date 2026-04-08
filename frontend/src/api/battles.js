@@ -5,6 +5,8 @@ export const battleApi = {
     const response = await axiosInstance.post("/battle/create", data);
     return response.data;
   },
+  // active
+
   getActiveBattles: async () => {
     const response = await axiosInstance.get("/battle/active");
     return response.data;
