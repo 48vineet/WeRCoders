@@ -5,11 +5,7 @@ import {
 } from "../data/battleProblems.js";
 import { determineBattleOutcome, outputsMatch } from "../lib/battleLogic.js";
 import { executeCode } from "../lib/piston.js";
-import {
-  chatClient,
-  streamClient,
-  streamConfigured,
-} from "../lib/stream.js";
+import { chatClient, streamClient, streamConfigured } from "../lib/stream.js";
 import Battle from "../models/Battle.js";
 
 const streamUnavailableResponse = (res) =>
@@ -453,11 +449,9 @@ export async function joinBattleByPassword(req, res) {
     });
 
     if (!battle) {
-      return res
-        .status(404)
-        .json({
-          message: "No battle found with this password or room is full",
-        });
+      return res.status(404).json({
+        message: "No battle found with this password or room is full",
+      });
     }
 
     // Check if already a participant

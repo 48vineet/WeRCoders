@@ -1,8 +1,8 @@
 import { clerkMiddleware } from "@clerk/express";
 import cors from "cors";
 import express from "express";
-import { serve } from "inngest/express";
 import fs from "fs";
+import { serve } from "inngest/express";
 import path from "path";
 import { connectDB } from "./lib/db.js";
 import env from "./lib/env.js";

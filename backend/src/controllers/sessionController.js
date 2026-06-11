@@ -1,8 +1,4 @@
-import {
-  chatClient,
-  streamClient,
-  streamConfigured,
-} from "../lib/stream.js";
+import { chatClient, streamClient, streamConfigured } from "../lib/stream.js";
 import Session from "../models/Session.js";
 
 const streamUnavailableResponse = (res) =>

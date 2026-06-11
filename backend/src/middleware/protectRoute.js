@@ -24,7 +24,7 @@ export const protectRoute = clerkConfigured
 
           // Fetch latest identity details from Clerk
           const clerkUser = await clerkClient.users.getUser(clerkId);
-          const name=
+          const name =
             clerkUser?.fullName ||
             `${clerkUser?.firstName || ""} ${clerkUser?.lastName || ""}`.trim() ||
             "Unknown";
@@ -70,7 +70,9 @@ export const protectRoute = clerkConfigured
               if (err?.code === 11000) {
                 return res
                   .status(409)
-                  .json({ message: "Account conflict detected. Please retry." });
+                  .json({
+                    message: "Account conflict detected. Please retry.",
+                  });
               }
               throw err;
             }
@@ -88,7 +90,7 @@ export const protectRoute = clerkConfigured
                 existingClerkId: user.clerkId,
                 incomingClerkId: clerkId,
                 email: primaryEmail,
-              }
+              },
             );
 
             // Update the user's clerkId to the new one from Clerk
@@ -96,13 +98,14 @@ export const protectRoute = clerkConfigured
               user = await User.findOneAndUpdate(
                 { email: primaryEmail },
                 { $set: { clerkId, name, profileImage: image } },
-                { new: true }
+                { new: true },
               );
               console.log("Successfully migrated user to new Clerk ID");
             } catch (migrateError) {
               console.error("Failed to migrate user Clerk ID:", migrateError);
               return res.status(500).json({
-                message: "Failed to migrate user account. Please contact support.",
+                message:
+                  "Failed to migrate user account. Please contact support.",
               });
             }
           }
