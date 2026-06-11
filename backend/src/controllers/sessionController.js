@@ -1,8 +1,21 @@
-import { chatClient, streamClient } from "../lib/stream.js";
+import {
+  chatClient,
+  streamClient,
+  streamConfigured,
+} from "../lib/stream.js";
 import Session from "../models/Session.js";
+
+const streamUnavailableResponse = (res) =>
+  res.status(503).json({
+    message: "Stream services are not configured on this deployment.",
+  });
 
 export async function createSession(req, res) {
   try {
+    if (!streamConfigured) {
+      return streamUnavailableResponse(res);
+    }
+
     const problem = req.body.problem;
     const difficulty = req.body.difficulty?.toLowerCase();
     const userId = req.user._id;
@@ -92,6 +105,10 @@ export async function getSessionById(req, res) {
 
 export async function joinSession(req, res) {
   try {
+    if (!streamConfigured) {
+      return streamUnavailableResponse(res);
+    }
+
     const { id } = req.params;
     const userId = req.user._id;
     const clerkId = req.user.clerkId;
@@ -129,6 +146,10 @@ export async function joinSession(req, res) {
 
 export async function endSession(req, res) {
   try {
+    if (!streamConfigured) {
+      return streamUnavailableResponse(res);
+    }
+
     const { id } = req.params;
     const userId = req.user._id;
 

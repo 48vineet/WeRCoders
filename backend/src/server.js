@@ -2,6 +2,7 @@ import { clerkMiddleware } from "@clerk/express";
 import cors from "cors";
 import express from "express";
 import { serve } from "inngest/express";
+import fs from "fs";
 import path from "path";
 import { connectDB } from "./lib/db.js";
 import env from "./lib/env.js";
@@ -12,12 +13,17 @@ import sessionRoutes from "./routes/sessionRoutes.js";
 
 const app = express();
 const __dirname = path.resolve();
+const clerkConfigured = Boolean(
+  env.CLERK_PUBLISHABLE_KEY && env.CLERK_SECRET_KEY,
+);
 
 //! middlewares
 
 app.use(express.json());
 app.use(cors({ origin: env.CLIENT_URL, credentials: true }));
-app.use(clerkMiddleware());
+if (clerkConfigured) {
+  app.use(clerkMiddleware());
+}
 app.use(
   "/api/inngest",
   serve({
@@ -34,7 +40,9 @@ app.get("/health", (req, res) => {
   res.status(200).json({ message: "Api is up and running " });
 });
 
-if (env.NODE_ENV === "production") {
+const frontendIndexPath = path.join(__dirname, "../frontend/dist/index.html");
+
+if (fs.existsSync(frontendIndexPath)) {
   app.use(express.static(path.join(__dirname, "../frontend/dist")));
 
   app.use((req, res) => {

@@ -5,8 +5,17 @@ import {
 } from "../data/battleProblems.js";
 import { determineBattleOutcome, outputsMatch } from "../lib/battleLogic.js";
 import { executeCode } from "../lib/piston.js";
-import { chatClient, streamClient } from "../lib/stream.js";
+import {
+  chatClient,
+  streamClient,
+  streamConfigured,
+} from "../lib/stream.js";
 import Battle from "../models/Battle.js";
+
+const streamUnavailableResponse = (res) =>
+  res.status(503).json({
+    message: "Stream services are not configured on this deployment.",
+  });
 
 const hashPassword = (password) =>
   crypto.createHash("sha256").update(password).digest("hex");
@@ -94,6 +103,10 @@ const startCountdown = async (battle) => {
 
 export async function createBattle(req, res) {
   try {
+    if (!streamConfigured) {
+      return streamUnavailableResponse(res);
+    }
+
     const { problemId, password } = req.body;
     if (!problemId || !BATTLE_PROBLEM_IDS.has(problemId)) {
       return res.status(400).json({ message: "Invalid problem selected" });
@@ -169,6 +182,10 @@ export async function getActiveBattles(req, res) {
 
 export async function joinBattle(req, res) {
   try {
+    if (!streamConfigured) {
+      return streamUnavailableResponse(res);
+    }
+
     const { roomId } = req.params;
     const { password } = req.body || {};
     const clerkId = req.user.clerkId;
@@ -415,6 +432,10 @@ export async function leaveBattle(req, res) {
 // Find and join battle by password
 export async function joinBattleByPassword(req, res) {
   try {
+    if (!streamConfigured) {
+      return streamUnavailableResponse(res);
+    }
+
     const { password } = req.body;
     const clerkId = req.user.clerkId;
 

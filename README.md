@@ -42,7 +42,7 @@ A real-time collaborative coding platform where developers can solve programming
 
 ## 📋 Prerequisites
 
-- Node.js 18.x or later
+- Node.js 20.19.x or later
 - MongoDB database
 - Clerk account for authentication
 - Stream account for video/chat functionality
@@ -83,7 +83,8 @@ PORT=5000
 CLIENT_URL=http://localhost:5173
 
 # Database
-MONGO_URI=your_mongodb_connection_string
+DB_URL=your_mongodb_connection_string
+# Or use MONGO_URI or MONGODB_URI; the backend accepts all three.
 
 # Clerk Authentication
 CLERK_PUBLISHABLE_KEY=your_clerk_publishable_key
@@ -91,9 +92,11 @@ CLERK_SECRET_KEY=your_clerk_secret_key
 
 # Stream (Video & Chat)
 STREAM_API_KEY=your_stream_api_key
-STREAM_SECRET_KEY=your_stream_secret_key
+STREAM_API_SECRET=your_stream_secret_key
+# Or use STREAM_SECRET_KEY; both names are supported.
 
 # Inngest
+INNGEST_EVENT_KEY=your_inngest_event_key
 INNGEST_SIGNING_KEY=your_inngest_signing_key
 ```
 
@@ -136,6 +139,13 @@ npm run build
 
 # Start production server
 npm start
+
+## Railway Deployment Notes
+
+- Use the repository root as the Railway service root.
+- Keep the default build command as `npm run build` and start command as `npm start`.
+- Set `DB_URL`, `CLERK_SECRET_KEY`, `CLERK_PUBLISHABLE_KEY`, `STREAM_API_KEY`, `STREAM_API_SECRET` or `STREAM_SECRET_KEY`, `INNGEST_EVENT_KEY`, and `INNGEST_SIGNING_KEY` in Railway.
+- If you already created a Mongo variable named `MONGO_URI` or `MONGODB_URI`, the backend will accept it as a fallback.
 ```
 
 ## 📁 Project Structure

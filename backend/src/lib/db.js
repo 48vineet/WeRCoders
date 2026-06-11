@@ -3,6 +3,13 @@ import env from "./env.js";
 
 export const connectDB = async () => {
   try {
+    if (!env.DB_URL) {
+      console.warn(
+        "No MongoDB connection string configured; skipping database connection.",
+      );
+      return null;
+    }
+
     const connect = await mongoose.connect(env.DB_URL);
     console.log("✅ Connected to DB: ", connect.connection.host);
 

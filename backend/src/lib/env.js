@@ -4,7 +4,8 @@ dotenv.config({ quiet: true });
 
 export default {
   PORT: process.env.PORT || 5000,
-  DB_URL: process.env.DB_URL,
+  DB_URL:
+    process.env.DB_URL || process.env.MONGO_URI || process.env.MONGODB_URI,
   NODE_ENV: process.env.NODE_ENV,
   CLIENT_URL: process.env.CLIENT_URL,
   // Support both correct and legacy typos for deployment safety
@@ -13,7 +14,8 @@ export default {
   INNGEST_SIGNING_KEY:
     process.env.INNGEST_SIGNING_KEY || process.env.INNJEST_SIGNING_KEY,
   STREAM_API_KEY: process.env.STREAM_API_KEY,
-  STREAM_API_SECRET: process.env.STREAM_API_SECRET,
+  STREAM_API_SECRET:
+    process.env.STREAM_API_SECRET || process.env.STREAM_SECRET_KEY,
   CLERK_PUBLISHABLE_KEY: process.env.CLERK_PUBLISHABLE_KEY,
   CLERK_SECRET_KEY: process.env.CLERK_SECRET_KEY,
 };
