@@ -3,15 +3,15 @@
   "rewrites": [
     {
       "source": "/api/(.*)",
-      "dest": "/api/index.js"
+      "destination": "/api/index.js"
     },
     {
       "source": "/health",
-      "dest": "/api/index.js"
+      "destination": "/api/index.js"
     },
     {
       "source": "/(.*)",
-      "dest": "/index.html"
+      "destination": "/index.html"
     }
   ]
 }
