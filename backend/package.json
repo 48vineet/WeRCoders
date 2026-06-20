@@ -25,5 +25,8 @@
     "minileetcode": "file:..",
     "mongoose": "^9.0.1",
     "stream-chat": "^9.27.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14"
   }
 }

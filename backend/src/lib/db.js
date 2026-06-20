@@ -2,6 +2,11 @@ import mongoose from "mongoose";
 import env from "./env.js";
 
 export const connectDB = async () => {
+  // If database is already connected or connecting, reuse the connection
+  if (mongoose.connection && mongoose.connection.readyState >= 1) {
+    return mongoose.connection;
+  }
+
   try {
     if (!env.DB_URL) {
       console.warn(
@@ -25,8 +30,12 @@ export const connectDB = async () => {
     } catch (idxErr) {
       console.warn("Index cleanup skipped:", idxErr?.message || idxErr);
     }
+    return connect;
   } catch (error) {
     console.error("❌Error connecting DB", error);
-    process.exit(1);
+    if (!process.env.VERCEL) {
+      process.exit(1);
+    }
+    throw error;
   }
 };

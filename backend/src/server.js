@@ -21,6 +21,18 @@ const clerkConfigured = Boolean(
 
 app.use(express.json());
 app.use(cors({ origin: env.CLIENT_URL, credentials: true }));
+
+// Connect to DB for serverless environments on every request
+if (process.env.VERCEL) {
+  app.use(async (req, res, next) => {
+    try {
+      await connectDB();
+      next();
+    } catch (err) {
+      next(err);
+    }
+  });
+}
 if (clerkConfigured) {
   app.use(clerkMiddleware());
 }
@@ -61,4 +73,8 @@ const startServer = async () => {
   }
 };
 
-startServer();
+if (!process.env.VERCEL) {
+  startServer();
+}
+
+export default app;
